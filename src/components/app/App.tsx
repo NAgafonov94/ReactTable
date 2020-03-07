@@ -1,26 +1,113 @@
 import * as React from 'react';
 import './App.scss';
+import {Table} from "../table/table";
 
 class App extends React.PureComponent {
-  render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
-    return (
-        <div className="App">
-          <header className="App-header">
-            <p>
-              Edit <code>src/App.js</code> and save to reload.
-            </p>
-            <a
-                className="App-link"
-                href="https://reactjs.org"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-              Learn React
-            </a>
-          </header>
-        </div>
-    );
-  }
+    columns: ITableColumn[] = [{
+      id: 'test',
+      label: 'test'
+    }, {
+      id: 'name',
+      label: 'name'
+    }];
+
+    rows: ITableRow[] = [{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    },{
+        test: 'hello',
+        name: 'world'
+    }];
+
+    render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
+        return (
+            <Table columns={this.columns} rows={this.rows} />
+        );
+    }
 }
 
 export default App;
