@@ -1,6 +1,7 @@
 interface ITableColumn {
     id: string;
     label: string;
+    width?: number;
 }
 
 interface ITableRow {

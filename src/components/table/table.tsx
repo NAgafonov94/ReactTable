@@ -26,13 +26,17 @@ export class Table extends React.PureComponent {
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
         return (
             <table className="table">
-                <thead ref={el => this.setState({ theadHeight: el?.clientHeight })}>
+                <thead className="table__thead" ref={el => this.setState({ theadHeight: el?.clientHeight })}>
                     <tr>
-                        {this.props.columns.map(column => <th key={column.id}>{column.label}</th>)}
+                        <th style={{width: 30}}>
+                            &nbsp;
+                        </th>
+
+                        {this.props.columns.map(column => <th style={{width: column.width}} key={column.id}>{column.label}</th>)}
                     </tr>
                 </thead>
 
-                <TableBody keysOrder={this.props.columns.map(col => col.id)}
+                <TableBody columns={this.props.columns}
                            rows={this.props.rows}
                            height={this.getTableBodyHeight()}
                            overScan={this.props.overScan || Table.DEFAULT_TABLE_OVER_SCAN}

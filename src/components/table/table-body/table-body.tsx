@@ -1,9 +1,10 @@
 import * as React from 'react';
+import {useState} from 'react';
 import "./table-body.scss";
 import {TablePagination} from "../table-pagination/table-pagination";
 
 interface ITableBodyProps {
-    keysOrder: string[];
+    columns: ITableColumn[];
     rows: ITableRow[];
     height: number;
     overScan: number;
@@ -36,7 +37,7 @@ export class TableBody extends React.PureComponent {
     private tbodyElement!: HTMLTableSectionElement | null;
 
     componentDidUpdate(prevProps: Readonly<ITableBodyProps>, prevState: Readonly<ITableBodyState>, snapshot?: any): void {
-         if (prevProps.height !== this.props.height || prevState.tfootHeight !== this.state.tfootHeight) {
+        if (prevProps.height !== this.props.height || prevState.tfootHeight !== this.state.tfootHeight) {
             this.setState({tbodyHeight: this.props.height - this.state.tfootHeight});
         }
 
@@ -61,26 +62,43 @@ export class TableBody extends React.PureComponent {
                        style={{height: this.state.tbodyHeight}}
                        ref={el => this.tbodyElement = el}
                        onScroll={event => this.onScroll(event)}>
-                    {
-                        this.props.rows.map((row, rowIndex) =>
-                            <tr key={rowIndex} style={{height: TableBody.TR_HEIGHT}}>
-                                {
-                                    this.isShowRow(rowIndex) && this.props.keysOrder.map((key, i) => <td
-                                        key={i}>{row[key]}</td>)
-                                }
-                            </tr>
-                        )
-                    }
+                {
+                    this.props.rows.map((row, rowIndex) =>
+                        <tr key={rowIndex} style={{height: TableBody.TR_HEIGHT}}>
+                            <td style={{width: 30}}>
+                                <this.Checkbox/>
+                            </td>
+
+                            {
+                                this.isShowRow(rowIndex) && this.props.columns.map((column, i) =>
+                                    <td className="table-body__cell" style={{width: column.width}}
+                                        key={i}>{row[column.id]}</td>
+                                )
+                            }
+                        </tr>
+                    )
+                }
                 </tbody>
 
-                <tfoot ref={el => this.setState({ tfootHeight: el?.clientHeight || 0 })}>
-                    <TablePagination count={Math.ceil(this.props.rows.length / (this.state.countVisibleElements || 1))}
-                                     page={this.state.page}
-                                     setPage={(page) => this.setPage(page)} />
+                <tfoot ref={el => this.setState({tfootHeight: el?.clientHeight || 0})}>
+                <TablePagination count={Math.ceil(this.props.rows.length / (this.state.countVisibleElements || 1))}
+                                 page={this.state.page}
+                                 setPage={(page) => this.setPage(page)}/>
                 </tfoot>
             </>
         )
     }
+
+    private Checkbox: React.FC = () => {
+        const [checked, setChecked] = useState(true);
+
+        return (
+            <label className="table-body-checkbox">
+                <input className="table-body-checkbox__input" type="checkbox" checked={checked} onChange={() => setChecked(!checked)}/>
+                <span className="table-body-checkbox__checkmark"></span>
+            </label>
+        );
+    };
 
     private updateCountVisibleElements(): Promise<ITableBodyState> {
         return new Promise<ITableBodyState>(resolve => this.setState({
@@ -89,11 +107,11 @@ export class TableBody extends React.PureComponent {
     }
 
     private onScroll(event: React.UIEvent<HTMLTableSectionElement>) {
-        this.setState({ scrollPosition: (event.target as HTMLElement).scrollTop });
+        this.setState({scrollPosition: (event.target as HTMLElement).scrollTop});
     }
 
     private updateSegment() {
-        const { scrollPosition } = this.state;
+        const {scrollPosition} = this.state;
         const firstVisibleRowIndex = Math.ceil(scrollPosition / TableBody.TR_HEIGHT);
         const lastVisibleRowIndex = Math.floor((scrollPosition + this.state.tbodyHeight) / TableBody.TR_HEIGHT);
         let startIndex = firstVisibleRowIndex - this.props.overScan;

@@ -14,11 +14,12 @@ interface IAppProps {
 class App extends React.PureComponent {
     public props!: IAppProps;
     private columns: ITableColumn[] = [{
-      id: 'updateData',
-      label: 'Update data'
+        id: 'updateData',
+        label: 'Update data',
+        width: 100
     }, {
-      id: 'message',
-      label: 'Message'
+        id: 'message',
+        label: 'Message'
     }];
 
     componentDidMount(): void {
@@ -29,13 +30,14 @@ class App extends React.PureComponent {
         return (
             <Table columns={this.columns}
                    rows={this.props.data}
-                   onLoadNextData={() => this.props.loadData()} />
+                   onLoadNextData={() => this.props.loadData()}
+                   height={600}/>
         );
     }
 }
 
 export default connect((state: RootState) => ({
-    data: state.dataReducer
-}), (dispatch: Dispatch) =>
-    bindActionCreators({ loadData: loadDataThunk }, dispatch)
+        data: state.dataReducer
+    }), (dispatch: Dispatch) =>
+        bindActionCreators({loadData: loadDataThunk}, dispatch)
 )(App);

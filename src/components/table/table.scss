@@ -12,6 +12,29 @@
   }
 }
 
-.table__tfoot {
-  height: 100px;
+.table__thead {
+  text-align: left;
+  padding: 15px 0;
+  border-bottom: 1px solid gray;
+  box-shadow: 0 2px 5px -2px grey;
+
+  & th {
+    padding-right: 5px;
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      right: 5px;
+      width: 1px;
+      height: 100%;
+      background-color: lightgray;
+    }
+
+    &:last-child {
+      &:after {
+        display: none;
+      }
+    }
+  }
 }
