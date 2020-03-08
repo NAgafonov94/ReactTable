@@ -16,9 +16,9 @@ export class Pagination extends React.PureComponent {
             <tr>
                 <td>
                     Prev,
-                    {pages.map(page => page === this.props.page
-                        ? <strong>{page},</strong>
-                        : <span onClick={() => this.props.setPage(page)}>{page},</span>
+                    {pages.map((page, i) => page === this.props.page
+                        ? <strong key={i}>{page},</strong>
+                        : <span key={i} onClick={() => this.props.setPage(page)}>{page},</span>
                     )}
                     Next
                 </td>

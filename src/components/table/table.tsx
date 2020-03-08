@@ -7,6 +7,7 @@ interface ITableProps {
     rows: ITableRow[];
     height?: number;
     overScan?: number;
+    onLoadNextData?: () => void;
 }
 
 interface ITableState {
@@ -34,7 +35,8 @@ export class Table extends React.PureComponent {
                 <TableBody keysOrder={this.props.columns.map(col => col.id)}
                            rows={this.props.rows}
                            height={this.getTableBodyHeight()}
-                           overScan={this.props.overScan || Table.DEFAULT_TABLE_OVER_SCAN} />
+                           overScan={this.props.overScan || Table.DEFAULT_TABLE_OVER_SCAN}
+                           onScrollEnd={() => this.props.onLoadNextData && this.props.onLoadNextData()} />
             </table>
         )
     }

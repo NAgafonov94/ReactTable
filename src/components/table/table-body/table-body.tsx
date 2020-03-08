@@ -7,6 +7,7 @@ interface ITableBodyProps {
     rows: ITableRow[];
     height: number;
     overScan: number;
+    onScrollEnd?: () => void
 }
 
 interface ITableBodyState {
@@ -44,8 +45,12 @@ export class TableBody extends React.PureComponent {
                 .then(() => this.updateSegment());
         }
 
-        if (prevState.scrollPosition !== this.state.scrollPosition) {
+        if (prevState.scrollPosition !== this.state.scrollPosition || prevProps.rows !== this.props.rows) {
             this.updateSegment();
+        }
+
+        if (prevState.scrollPosition !== this.state.scrollPosition && (this.state.scrollPosition + this.state.tbodyHeight) === this.tbodyElement?.scrollHeight) {
+            this.props.onScrollEnd && this.props.onScrollEnd();
         }
     }
 
