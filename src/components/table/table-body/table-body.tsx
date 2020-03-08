@@ -1,6 +1,6 @@
 import * as React from 'react';
 import "./table-body.scss";
-import {Pagination} from "../../pagination/pagination";
+import {TablePagination} from "../table-pagination/table-pagination";
 
 interface ITableBodyProps {
     keysOrder: string[];
@@ -74,9 +74,9 @@ export class TableBody extends React.PureComponent {
                 </tbody>
 
                 <tfoot ref={el => this.setState({ tfootHeight: el?.clientHeight || 0 })}>
-                    <Pagination count={Math.ceil(this.props.rows.length / (this.state.countVisibleElements || 1))}
-                                page={this.state.page}
-                                setPage={(page) => this.setPage(page)} />
+                    <TablePagination count={Math.ceil(this.props.rows.length / (this.state.countVisibleElements || 1))}
+                                     page={this.state.page}
+                                     setPage={(page) => this.setPage(page)} />
                 </tfoot>
             </>
         )

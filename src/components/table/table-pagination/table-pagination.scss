@@ -1,0 +1,26 @@
+.table-pagination {
+
+}
+
+.table-pagination__td {
+  text-align: right;
+  padding-right: 20px;
+}
+
+.table-pagination__button {
+  padding: 5px;
+  border-radius: 3px;
+  font-weight: bold;
+  margin-left: 10px;
+  cursor: pointer;
+
+  &_active {
+    color: white;
+    background-color: #629384;
+  }
+
+  &_disable {
+    pointer-events: none;
+    opacity: .5;
+  }
+}
