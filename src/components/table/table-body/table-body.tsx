@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useState} from 'react';
 import "./table-body.scss";
 import {TablePagination} from "../table-pagination/table-pagination";
+import {Table} from "../table";
 
 interface ITableBodyProps {
     columns: ITableColumn[];
@@ -70,7 +71,7 @@ export class TableBody extends React.PureComponent {
                         this.props.rows.map((row, rowIndex) =>
                             this.isShowRow(rowIndex) && (
                                 <tr key={rowIndex} style={{height: TableBody.TR_HEIGHT}}>
-                                    <td style={{width: 30}}>
+                                    <td style={{width: Table.FIRST_COLUMN_WIDTH}}>
                                         <this.Checkbox/>
                                     </td>
 

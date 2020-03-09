@@ -17,6 +17,7 @@ interface ITableState {
 export class Table extends React.PureComponent {
     static DEFAULT_TABLE_HEIGHT = 300;
     static DEFAULT_TABLE_OVER_SCAN = 10;
+    static FIRST_COLUMN_WIDTH = 30;
 
     public props!: ITableProps;
     public state: ITableState = {
@@ -28,7 +29,7 @@ export class Table extends React.PureComponent {
             <table className="table">
                 <thead className="table__thead" ref={el => this.setState({ theadHeight: el?.clientHeight })}>
                     <tr>
-                        <th style={{width: 30}}>
+                        <th style={{width: Table.FIRST_COLUMN_WIDTH}}>
                             &nbsp;
                         </th>
 
