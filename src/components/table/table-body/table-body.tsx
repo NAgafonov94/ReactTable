@@ -160,6 +160,6 @@ export class TableBody extends React.PureComponent {
     }
 
     private getLastRowHeight(): number {
-        return (this.props.rows.length - this.state.endIndex) * TableBody.TR_HEIGHT;
+        return (this.props.rows.length - 1 - this.state.endIndex) * TableBody.TR_HEIGHT;
     }
 }
