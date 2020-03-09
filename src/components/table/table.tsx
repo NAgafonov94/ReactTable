@@ -18,8 +18,8 @@ export class Table extends React.PureComponent {
     static DEFAULT_TABLE_HEIGHT = 300;
     static DEFAULT_TABLE_OVER_SCAN = 10;
 
-    props!: ITableProps;
-    state: ITableState = {
+    public props!: ITableProps;
+    public state: ITableState = {
         theadHeight: 0
     };
 

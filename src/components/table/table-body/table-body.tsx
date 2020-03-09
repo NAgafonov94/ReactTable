@@ -62,28 +62,38 @@ export class TableBody extends React.PureComponent {
                        style={{height: this.state.tbodyHeight}}
                        ref={el => this.tbodyElement = el}
                        onScroll={event => this.onScroll(event)}>
-                {
-                    this.props.rows.map((row, rowIndex) =>
-                        <tr key={rowIndex} style={{height: TableBody.TR_HEIGHT}}>
-                            <td style={{width: 30}}>
-                                <this.Checkbox/>
-                            </td>
+                    <tr style={{height: this.getFirstRowHeight()}}>
 
-                            {
-                                this.isShowRow(rowIndex) && this.props.columns.map((column, i) =>
-                                    <td className="table-body__cell" style={{width: column.width}}
-                                        key={i}>{row[column.id]}</td>
-                                )
-                            }
-                        </tr>
-                    )
-                }
+                    </tr>
+
+                    {
+                        this.props.rows.map((row, rowIndex) =>
+                            this.isShowRow(rowIndex) && (
+                                <tr key={rowIndex} style={{height: TableBody.TR_HEIGHT}}>
+                                    <td style={{width: 30}}>
+                                        <this.Checkbox/>
+                                    </td>
+
+                                    {
+                                        this.props.columns.map((column, i) =>
+                                            <td className="table-body__cell" style={{width: column.width}}
+                                                key={i}>{row[column.id]}</td>
+                                        )
+                                    }
+                                </tr>
+                            )
+                        )
+                    }
+
+                    <tr style={{height: this.getLastRowHeight()}}>
+
+                    </tr>
                 </tbody>
 
                 <tfoot ref={el => this.setState({tfootHeight: el?.clientHeight || 0})}>
-                <TablePagination count={Math.ceil(this.props.rows.length / (this.state.countVisibleElements || 1))}
-                                 page={this.state.page}
-                                 setPage={(page) => this.setPage(page)}/>
+                    <TablePagination count={Math.ceil(this.props.rows.length / (this.state.countVisibleElements || 1))}
+                                     page={this.state.page}
+                                     setPage={(page) => this.setPage(page)}/>
                 </tfoot>
             </>
         )
@@ -111,9 +121,7 @@ export class TableBody extends React.PureComponent {
     }
 
     private updateSegment() {
-        const {scrollPosition} = this.state;
-        const firstVisibleRowIndex = Math.ceil(scrollPosition / TableBody.TR_HEIGHT);
-        const lastVisibleRowIndex = Math.floor((scrollPosition + this.state.tbodyHeight) / TableBody.TR_HEIGHT);
+        const [firstVisibleRowIndex, lastVisibleRowIndex] = this.getVisibleIndexes();
         let startIndex = firstVisibleRowIndex - this.props.overScan;
         let endIndex = lastVisibleRowIndex + this.props.overScan;
 
@@ -135,5 +143,22 @@ export class TableBody extends React.PureComponent {
         this.tbodyElement?.scrollTo({
             top: (page - 1) * this.state.countVisibleElements * TableBody.TR_HEIGHT
         });
+    }
+
+    private getVisibleIndexes(): [number, number] {
+        const {scrollPosition} = this.state;
+
+        return [
+            Math.ceil(scrollPosition / TableBody.TR_HEIGHT),
+            Math.floor((scrollPosition + this.state.tbodyHeight) / TableBody.TR_HEIGHT)
+        ];
+    }
+
+    private getFirstRowHeight(): number {
+        return this.state.startIndex * TableBody.TR_HEIGHT;
+    }
+
+    private getLastRowHeight(): number {
+        return (this.props.rows.length - this.state.endIndex) * TableBody.TR_HEIGHT;
     }
 }
