@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './App.scss';
 import {Table} from "../table/table";
 import {connect} from "react-redux";
 import {loadDataThunk} from "../../actions/data/thunk";
